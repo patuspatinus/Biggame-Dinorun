@@ -1,0 +1,33 @@
+#ifndef LDEFINE_H_INCLUDED
+#define LDEFINE_H_INCLUDED
+
+#define GROUND 510
+#define MAX_HEIGHT 280
+#define BASE_OFFSET_SPEED 0
+
+bool JUMP = 1;
+bool FALL = 0;
+int type;
+
+const int WALKING_ANIMATION_FRAMES = 6;
+
+#define ENEMY_MAX_HEIGHT 300
+#define ENEMY_MIN_HEIGHT 330
+
+#define ENEMY_POSITION_RANGE 250
+#define ENEMY1_RANGE 100
+#define ENEMY2_RANGE 350
+#define ENEMY3_RANGE 500
+
+#define IN_AIR_ENEMY 1
+#define ON_GROUND_ENEMY 0
+#define ENEMY_SPEED 5
+#define MAX_ENEMY_WIDTH 100
+
+#define TEXT_YourScore_POSX 1000
+#define TEXT_YourScore_POSY 10
+
+#define TEXT_BestScore_POSX 1000
+#define TEXT_BestScore_POSY 35
+
+#endif // LDEFINE_H_INCLUDED
