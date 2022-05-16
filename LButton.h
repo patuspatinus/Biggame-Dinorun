@@ -5,29 +5,8 @@ enum LButtonSprite
 	BUTTON_MOUSE_OUT = 0,
 	BUTTON_MOUSE_IN = 1,
 	BUTTON_TOTAL = 2,
+	BUTTON_AUDIO_TOTAL = 3,
 };
-
-#define SMALL_BUTTON 1
-#define COMMON_BUTTON 2
-#define CHAR_BUTTON 3
-
-const int COMMON_BUTTON_WIDTH = 150;
-const int COMMON_BUTTON_HEIGHT = 98;
-const int SMALL_BUTTON_WIDTH = 35;
-const int SMALL_BUTTON_HEIGHT = 35;
-const int CHAR_BUTTON_WIDTH = 57;
-const int CHAR_BUTTON_HEIGHT = 57;
-
-const int PLAY_BUTTON_POSX = 500;
-const int PLAY_BUTTON_POSY = 200;
-const int HELP_BUTTON_POSX = 500;
-const int HELP_BUTTON_POSY = 320;
-const int EXIT_BUTTON_POSX = 500;
-const int EXIT_BUTTON_POSY = 440;
-const int PAUSE_BUTTON_POSX = 10;
-const int PAUSE_BUTTON_POSY = 10;
-const int CONTINUE_BUTTON_POSX = 10;
-const int CONTINUE_BUTTON_POSY = 10;
 
 class LButton
 {
@@ -90,8 +69,8 @@ bool LButton::IsInside(SDL_Event *e, int size)
                     button_width = COMMON_BUTTON_WIDTH;
 			        button_height = COMMON_BUTTON_HEIGHT;
 		    }else{
-		        button_width = CHAR_BUTTON_WIDTH;
-                button_height = CHAR_BUTTON_HEIGHT;
+		        button_width = RETURN_BUTTON_WIDTH;
+                button_height = RETURN_BUTTON_HEIGHT;
 		    }
 		}
 		SDL_GetMouseState(&x, &y);

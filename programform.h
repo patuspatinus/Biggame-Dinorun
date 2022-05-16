@@ -7,8 +7,6 @@
 #include <vector>
 using namespace std;
 
-const int SCREEN_WIDTH = 1200;
-const int SCREEN_HEIGHT = 600;
 const string WINDOW_TITLE = "Big game by patuspatinus";
 
 void logSDLError(std::ostream& os,

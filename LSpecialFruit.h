@@ -1,22 +1,20 @@
-#ifndef LENEMY_H_INCLUDED
-#define LENEMY_H_INCLUDED
+#ifndef LSPECIALFRUIT_H_INCLUDED
+#define LSPECIALFRUIT_H_INCLUDED
 
-class Enemy
+class SpecialFruit
 {
 public:
-	Enemy(int _type = 0);
+    int posX;
 
-	~Enemy();
+    SpecialFruit(int _type = 0);
+
+    ~SpecialFruit();
 
 	void LoadFromFile(std::string path, SDL_Renderer* gRenderer);
 
-	void Move(const int& acceleration);
+	void Move(const int& acceleration, bool & checkappear);
 
 	void Render(SDL_Renderer* gRenderer, SDL_Rect* currentClip = nullptr);
-
-	int GetType();
-
-	int GetSpeed(const int& acceleration);
 
 	int GetPosX();
 
@@ -26,16 +24,16 @@ public:
 
 	int GetHeight();
 private:
-	int posX, posY;
-
-	int eWidth, eHeight;
+	int posY;
 
 	int type;
 
-	SDL_Texture *EnemyTexture;
+	int eWidth, eHeight;
+
+	SDL_Texture *SpecialFruitTexture;
 };
 
-Enemy::Enemy(int _type)
+SpecialFruit::SpecialFruit(int _type)
 {
 	posX = 0;
 	posY = 0;
@@ -47,18 +45,12 @@ Enemy::Enemy(int _type)
  	if (type == IN_AIR_ENEMY)
 	{
 		posX = rand() % (SCREEN_WIDTH + RANGE) + SCREEN_WIDTH;
-		posY = GROUND - 180;
+		posY = GROUND - 140;
 	}
-	else if (type == ON_GROUND_ENEMY)
-	{
-		posX = rand() % (SCREEN_WIDTH + RANGE) + SCREEN_WIDTH;
-		posY = GROUND - 43;
-	}
-
-	EnemyTexture = nullptr;
+	SpecialFruitTexture = nullptr;
 }
 
-Enemy::~Enemy()
+SpecialFruit::~SpecialFruit()
 {
 	posX = 0;
 	posY = 0;
@@ -66,14 +58,13 @@ Enemy::~Enemy()
 	eWidth = 0;
 	eHeight = 0;
 
-	type = 0;
-	if (EnemyTexture != nullptr)
+	if (SpecialFruitTexture != nullptr)
 	{
-		EnemyTexture = nullptr;
+		SpecialFruitTexture = nullptr;
 	}
 }
 
-void Enemy::LoadFromFile(std::string path, SDL_Renderer* gRenderer)
+void SpecialFruit::LoadFromFile(std::string path, SDL_Renderer* gRenderer)
 {
 	SDL_Texture* tmpTexture = nullptr;
 
@@ -100,24 +91,21 @@ void Enemy::LoadFromFile(std::string path, SDL_Renderer* gRenderer)
 		SDL_FreeSurface(tmpSurface);
 	}
 
-	EnemyTexture = tmpTexture;
+	SpecialFruitTexture = tmpTexture;
 }
 
-void Enemy::Move(const int &acceleration)
+void SpecialFruit::Move(const int &acceleration, bool& checkappear)
 {
 	posX += -(ENEMY_SPEED + acceleration);
-	if (posX < - MAX_ENEMY_WIDTH )
+	if ((posX + MAX_ENEMY_WIDTH < 0) && (checkappear))
 	{
 		posX = rand() % (SCREEN_WIDTH + RANGE) + SCREEN_WIDTH;
-
-		if (type == IN_AIR_ENEMY)
-		{
-			posY = rand() % (ENEMY_MAX_HEIGHT - ENEMY_MIN_HEIGHT + 1) + ENEMY_MIN_HEIGHT;
-		}
+        posY = rand() % (ENEMY_MAX_HEIGHT - ENEMY_MIN_HEIGHT + 1) + ENEMY_MIN_HEIGHT;
+        checkappear = false;
 	}
 }
 
-void Enemy::Render(SDL_Renderer* gRenderer, SDL_Rect* currentClip)
+void SpecialFruit::Render(SDL_Renderer* gRenderer, SDL_Rect* currentClip)
 {
 	SDL_Rect renderSpace = { posX, posY, eWidth, eHeight };
 	if (currentClip != nullptr)
@@ -125,44 +113,27 @@ void Enemy::Render(SDL_Renderer* gRenderer, SDL_Rect* currentClip)
 		renderSpace.w = currentClip->w;
 		renderSpace.h = currentClip->h;
 	}
-	SDL_RenderCopy(gRenderer, EnemyTexture, currentClip, &renderSpace);
+	SDL_RenderCopy(gRenderer, SpecialFruitTexture, currentClip, &renderSpace);
 }
 
-int Enemy::GetType()
-{
-	if (type == IN_AIR_ENEMY)
-	{
-		return IN_AIR_ENEMY;
-	}
-	else
-	{
-		return ON_GROUND_ENEMY;
-	}
-}
-
-int Enemy::GetSpeed(const int &acceleration)
-{
-	return ENEMY_SPEED + acceleration;
-}
-
-int Enemy::GetPosX()
+int SpecialFruit::GetPosX()
 {
 	return posX;
 }
 
-int Enemy::GetPosY()
+int SpecialFruit::GetPosY()
 {
 	return posY;
 }
 
-int Enemy::GetWidth()
+int SpecialFruit::GetWidth()
 {
 	return eWidth;
 }
 
-int Enemy::GetHeight()
+int SpecialFruit::GetHeight()
 {
 	return eHeight;
 }
 
-#endif // LENEMY_H_INCLUDED
+#endif // LSPECIALFRUIT_H_INCLUDED

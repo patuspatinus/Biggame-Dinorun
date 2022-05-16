@@ -7,13 +7,13 @@
 class Character
 {
 public:
-	const int GRAVITY = 12;
+	const int GRAVITY = 10;
 
 	Character();
 
 	bool OnGround();
 
-	void HandleEvent(SDL_Event& e);
+	void HandleEvent(SDL_Event& e,Mix_Chunk *gJump, bool &mute);
 
 	void Move();
 
@@ -33,16 +33,16 @@ private:
 Character::Character()
 {
 	posX = SCREEN_WIDTH - 1100;
-	posY = GROUND;
+	posY = GROUND - 6;
 
 	status = 0;
 }
 
 bool Character::OnGround()
 {
-	return posY == GROUND;
+	return posY == GROUND - 6;
 }
-void Character::HandleEvent(SDL_Event& e)
+void Character::HandleEvent(SDL_Event& e, Mix_Chunk *gJump, bool& mute)
 {
 	if (e.type == SDL_KEYDOWN && e.key.repeat == 0)
 	{
@@ -52,6 +52,9 @@ void Character::HandleEvent(SDL_Event& e)
 			{
 				if (OnGround())
 				{
+				    if (!mute){
+                        Mix_PlayChannel(-1, gJump, 0);
+				    }
 					status = JUMP;
 				}
 			}
@@ -69,7 +72,7 @@ void Character::Move()
 	{
 		status = FALL;
 	}
-    if (status == FALL && posY < GROUND)
+    if (status == FALL && posY < GROUND - 6)
 	{
 		posY += GRAVITY;
 	}
